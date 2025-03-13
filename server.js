@@ -34,11 +34,13 @@ app.use(
 
 app.use(passUserToView);
 
-// render homepage 
+// redirect  signed in users to index page 
 app.get('/', (req, res) => {
-  res.render('index.ejs', {
-    user: req.session.user,
-  });
+  if (req.session.user ){
+    res.redirect(`/users/${req.session.user._id}/applications`);
+  } else {
+    res.render('index.ejs');
+  }
 });
 
 // app.use allows you to add middleware
